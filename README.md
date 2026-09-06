@@ -101,9 +101,37 @@ sudo systemctl start mongod
 sudo systemctl status mongod
 ```
 
+> If you want to connect to MongoDB from MongoDB Compass, make sure MongoDB traffic is not blocked by the firewall. If you are using UFW, allow the MongoDB port so Compass can connect:
+>
+> ```sh
+> sudo ufw allow 27017/tcp
+> sudo ufw status
+> ```
+>
+> This ensures MongoDB is not excluded by the firewall when using Compass.
+
 ✅ **Automate this step:** The [`install.sh`](install.sh) script can also automate MongoDB installation and configuration.
 
 🔴 **Common Mistake:** Always stop MongoDB before modifying its configuration file to prevent crashes.
+
+### Optional: Install PostgreSQL
+
+If you want to use PostgreSQL instead of MongoDB, or as an additional database option, install it with:
+
+```sh
+sudo apt install postgresql postgresql-contrib -y
+sudo systemctl status postgresql
+sudo -u postgres psql
+```
+
+Then create a database user/role:
+
+```sql
+CREATE ROLE admin WITH LOGIN SUPERUSER CREATEDB CREATEROLE PASSWORD 'YOUR_STRONG_PASSWORD';
+\q
+```
+
+This gives you a PostgreSQL admin account that can be used by your app configuration.
 
 ---
 
@@ -211,6 +239,15 @@ sudo ufw allow OpenSSH
 sudo ufw allow 'Nginx Full'
 sudo ufw enable
 ```
+
+If you are using MongoDB and need to connect with MongoDB Compass, make sure the firewall does not block MongoDB access. For example, allow the MongoDB port:
+
+```sh
+sudo ufw allow 27017/tcp
+sudo ufw status
+```
+
+This prevents MongoDB from being blocked while allowing your app and Compass to connect securely.
 
 🔴 **Common Mistake:** Ensure you allow `OpenSSH` before enabling UFW, or else you might lock yourself out of the server.
 
