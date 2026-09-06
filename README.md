@@ -114,24 +114,27 @@ sudo systemctl status mongod
 
 🔴 **Common Mistake:** Always stop MongoDB before modifying its configuration file to prevent crashes.
 
-### Optional: Install PostgreSQL
+### Install PostgreSQL
 
-If you want to use PostgreSQL instead of MongoDB, or as an additional database option, install it with:
+You can install MongoDB or PostgreSQL — choose whichever fits your requirements.
+
+Install PostgreSQL with:
 
 ```sh
 sudo apt install postgresql postgresql-contrib -y
 sudo systemctl status postgresql
-sudo -u postgres psql
 ```
 
-Then create a database user/role:
+Create a database user/role and a demo database:
 
-```sql
+```sh
+sudo -u postgres psql
 CREATE ROLE admin WITH LOGIN SUPERUSER CREATEDB CREATEROLE PASSWORD 'YOUR_STRONG_PASSWORD';
+CREATE DATABASE demo OWNER admin;
 \q
 ```
 
-This gives you a PostgreSQL admin account that can be used by your app configuration.
+This gives you a PostgreSQL admin account and a `demo` database for your application.
 
 ---
 
